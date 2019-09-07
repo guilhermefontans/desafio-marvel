@@ -1,35 +1,42 @@
 <?php
 
-
 namespace App\Entity;
 
+/**
+ * Class Character
+ * @package App\Entity
+ */
 class Character
 {
-    private $id;
+    public $id;
 
-    private $description;
+    public $name;
 
-    private $modified;
+    public $description;
 
-    private $thumbnail;
+    public $modified;
 
-    private $resourceURI;
+    public $thumbnail;
+
+    public $resourceURI;
 
     /**
      * Character constructor.
      * @param $id
+     * @param $name
      * @param $description
      * @param $modified
      * @param $thumbnail
      * @param $resourceURI
      */
-    public function __construct($id, $description, $modified, $thumbnail, $resourceURI)
+    public function __construct($id, $name, $description, $modified, $thumbnail, $resourceURI)
     {
-        $this->id = $id;
-        $this->description = $description;
-        $this->modified = $modified;
-        $this->thumbnail = $thumbnail;
-        $this->resourceURI = $resourceURI;
+        $this->id           = $id;
+        $this->name         = $name;
+        $this->description  = $description;
+        $this->modified     = $modified;
+        $this->thumbnail    = $thumbnail;
+        $this->resourceURI  = $resourceURI;
     }
 
     /**
@@ -38,6 +45,11 @@ class Character
     public function getId()
     {
         return $this->id;
+    }
+
+    public function getName()
+    {
+        return $this->getName();
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpClient\HttpClient;
 
 /**
@@ -10,6 +11,8 @@ use Symfony\Component\HttpClient\HttpClient;
  */
 class AbstractService
 {
+    protected $logger;
+
     protected $httpclient;
 
     protected $url = "https://gateway.marvel.com/";
@@ -30,36 +33,46 @@ class AbstractService
 
     /**
      * AbstractService constructor.
+     * @param LoggerInterface $logger
      * @throws \Exception
      */
-    public function __construct()
+    public function __construct(LoggerInterface $logger)
     {
-        $this->httpclient = HttpClient::create();
-        $this->privateKey = $_ENV["API_PRIVATE_KEY"];
-        $this->publicKey = $_ENV["API_PUBLIC_KEY"];
-        $now = new \DateTimeImmutable();
-        $this->timestamp = $now->getTimestamp();
-        $this->formatUrl();
+        $this->logger       = $logger;
+        $this->httpclient   = HttpClient::create();
+        $this->privateKey   = $_ENV["API_PRIVATE_KEY"];
+        $this->publicKey    = $_ENV["API_PUBLIC_KEY"];
+        $now                = new \DateTimeImmutable();
+        $this->timestamp    = $now->getTimestamp();
     }
 
-    public function formatUrl()
+    private function formatUrl($id = null, $filters = null)
     {
         $this->resource = strtolower(substr((new \ReflectionClass($this))->getShortName(), 0, -7));
         $this->hash = md5($this->timestamp . $this->privateKey . $this->publicKey);
-        $parameters = [
-            "apikey" => $this->publicKey,
-            "ts" => $this->timestamp,
-            "hash" => $this->hash
-        ];
+
+        $filters["apikey"] = $this->publicKey;
+        $filters["ts"]     = $this->timestamp;
+        $filters["hash"]   = $this->hash;
 
         $this->urlFull  = $this->url;
         $this->urlFull .= $this->version;
         $this->urlFull .= $this->resource;
-        $this->urlFull .= "?" .http_build_query($parameters);
+        $this->urlFull .= $id ? "/$id" : "";
+        $this->urlFull .= "?" .http_build_query($filters);
     }
 
-    public function request()
+    public function findAll()
     {
+        $this->formatUrl();
+        $this->logger->info("Fazendo request para: [$this->urlFull]", compact(["Resource" => self::class]));
+        return $this->httpclient->request("GET", $this->urlFull);
+    }
+
+    public function findById($id)
+    {
+        $this->formatUrl($id);
+        $this->logger->info("Fazendo request para: [$this->urlFull]");
         return $this->httpclient->request("GET", $this->urlFull);
     }
 }
