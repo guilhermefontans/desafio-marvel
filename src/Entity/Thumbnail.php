@@ -24,10 +24,10 @@ class Thumbnail
      */
     public function __construct($path, $imageSize, $extension)
     {
-        $this->path = $path;
+        $this->path      = $path;
         $this->imageSize = $imageSize;
         $this->extension = $extension;
-        $this->fullPath = $this->path ."/". $this->imageSize .".".$this->extension;
+        $this->fullPath  = $this->path ."/". $this->imageSize .".".$this->extension;
     }
 
     /**

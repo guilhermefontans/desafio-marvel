@@ -25,10 +25,10 @@ class Storie
      */
     public function __construct($id, $title, $resourceURI, $thumbnail)
     {
-        $this->id = $id;
-        $this->title = $title;
+        $this->id          = $id;
+        $this->title       = $title;
         $this->resourceURI = $resourceURI;
-        $this->thumbnail = $thumbnail;
+        $this->thumbnail   = $thumbnail;
     }
 
 }

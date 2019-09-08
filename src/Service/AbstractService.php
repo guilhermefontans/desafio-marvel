@@ -47,7 +47,7 @@ class AbstractService
         $now                = new \DateTimeImmutable();
         $this->timestamp    = $now->getTimestamp();
 
-        if ($this->privateKey = "xxxxxxxx") {
+        if ($this->privateKey == "xxxxxxxx") {
             throw new \Exception("Did you edit .env file?");
         }
     }

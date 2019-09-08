@@ -16,7 +16,7 @@ class ComicBuilder implements BuilderInterface
     public function build(array $data)
     {
         $thumbnailBuilder = new ThumbnailBuilder();
-        $thumbnail = $thumbnailBuilder->build($data);
+        $thumbnail        = $thumbnailBuilder->build($data);
 
         return new Comic(
             $data["id"],

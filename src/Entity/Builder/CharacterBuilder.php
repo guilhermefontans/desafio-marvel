@@ -14,7 +14,7 @@ class CharacterBuilder implements BuilderInterface
     public function build(array $data)
     {
         $thumbnailBuilder = new ThumbnailBuilder();
-        $thumbnail = $thumbnailBuilder->build($data);
+        $thumbnail        = $thumbnailBuilder->build($data);
 
         $comics = [];
         $comics["available"] = $data["comics"]["available"];

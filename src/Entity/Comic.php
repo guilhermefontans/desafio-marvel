@@ -37,13 +37,13 @@ class Comic
      */
     public function __construct($id, $title, $issueNumber, $variantDescription, $description, $thumbnail = null, $resourceURI, $pageCount)
     {
-        $this->id = $id;
-        $this->title = $title;
-        $this->issueNumber = $issueNumber;
+        $this->id                 = $id;
+        $this->title              = $title;
+        $this->issueNumber        = $issueNumber;
         $this->variantDescription = $variantDescription;
-        $this->description = $description;
-        $this->thumbnail = $thumbnail;
-        $this->resourceURI = $resourceURI;
-        $this->pageCount = $pageCount;
+        $this->description        = $description;
+        $this->thumbnail          = $thumbnail;
+        $this->resourceURI        = $resourceURI;
+        $this->pageCount          = $pageCount;
     }
 }
