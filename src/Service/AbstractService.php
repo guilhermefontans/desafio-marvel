@@ -46,6 +46,10 @@ class AbstractService
         $this->publicKey    = $_ENV["API_PUBLIC_KEY"];
         $now                = new \DateTimeImmutable();
         $this->timestamp    = $now->getTimestamp();
+
+        if ($this->privateKey = "xxxxxxxx") {
+            throw new \Exception("Did you edit .env file?");
+        }
     }
 
     protected function formatUrlFull($id = null, $filters = null, $resource = null)

@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  webserver:
+    image: 'nginx:1.15.3-alpine'
+    container_name: webserver-desafio-marvel
+    restart: on-failure
+    ports:
+      - '8000:80'
+    volumes:
+      - ./public:/usr/src/app
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - php
+  php:
+    image: 'php:7.2-fpm'
+    container_name: php-desafio-marvel
+    restart: on-failure
+    volumes:
+      - ./:/usr/src/app
+    env_file:
+      - .env
