@@ -20,67 +20,24 @@ class Character
 
     public $resourceURI;
 
+    public $comics;
+
     /**
      * Character constructor.
      * @param $id
      * @param $name
      * @param $description
-     * @param $modified
-     * @param $thumbnail
      * @param $resourceURI
+     * @param null $thumbnail
+     * @param $comics
      */
-    public function __construct($id, $name, $description, $modified, $thumbnail, $resourceURI)
+    public function __construct($id, $name, $description, $resourceURI, $thumbnail = null, $comics)
     {
         $this->id           = $id;
         $this->name         = $name;
         $this->description  = $description;
-        $this->modified     = $modified;
-        $this->thumbnail    = $thumbnail;
         $this->resourceURI  = $resourceURI;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    public function getName()
-    {
-        return $this->getName();
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getModified()
-    {
-        return $this->modified;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getThumbnail()
-    {
-        return $this->thumbnail;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getResourceURI()
-    {
-        return $this->resourceURI;
+        $this->thumbnail    = $thumbnail;
+        $this->comics       = $comics;
     }
 }
