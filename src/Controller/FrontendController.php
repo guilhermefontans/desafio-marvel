@@ -89,11 +89,11 @@ class FrontendController extends AbstractController
     private function getComicsFromCharacter(Character $character)
     {
         $comics = [];
-        foreach ($character->comics["items"] as $item) {
-            $response = $this->comicsService->findByResourceURI($item["resourceURI"]);
-            if ($response->getStatusCode() == 200) {
-                $comicsData = json_decode($response->getContent(), 1);
-                $builder = new ComicBuilder($comicsData["data"]["results"][0]);
+        $response = $this->comicsService->findByResourceURI($character->comics["collectionURI"]);
+        if ($response->getStatusCode() == 200) {
+            $comicsData = json_decode($response->getContent(), 1);
+            foreach ($comicsData["data"]["results"] as $item) {
+                $builder = new ComicBuilder($item);
                 $comic = $builder->build();
                 $comics[] = $comic;
             }

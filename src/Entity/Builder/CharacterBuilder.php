@@ -28,9 +28,7 @@ class CharacterBuilder implements BuilderInterface
         $comics["available"] = $this->data["comics"]["available"];
 
         if ($comics["available"] > 0) {
-            foreach ($this->data["comics"]["items"] as $item) {
-                $comics["items"][] = $item;
-            }
+            $comics["collectionURI"] = $this->data["comics"]["collectionURI"];
         }
 
         return new Character(
