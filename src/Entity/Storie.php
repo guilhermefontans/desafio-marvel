@@ -6,15 +6,15 @@ namespace App\Entity;
  * Class Storie
  * @package App\Entity
  */
-class Storie
+class Storie implements EntityInterface
 {
-    public $id;
+    private $id;
 
-    public $title;
+    private $title;
 
-    public $resourceURI;
+    private $resourceURI;
 
-    public $thumbnail;
+    private $thumbnail;
 
     /**
      * Storie constructor.
@@ -31,4 +31,35 @@ class Storie
         $this->thumbnail   = $thumbnail;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getResourceURI()
+    {
+        return $this->resourceURI;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getThumbnail()
+    {
+        return $this->thumbnail;
+    }
 }

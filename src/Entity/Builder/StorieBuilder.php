@@ -2,6 +2,7 @@
 
 namespace App\Entity\Builder;
 
+use App\Entity\EntityInterface;
 use App\Entity\Storie;
 
 /**
@@ -10,7 +11,7 @@ use App\Entity\Storie;
  */
 class StorieBuilder implements BuilderInterface
 {
-    public function build(array $data)
+    public function build(array $data): EntityInterface
     {
         $thumbnailBuilder = new ThumbnailBuilder();
         $thumbnail = $thumbnailBuilder->build($data);

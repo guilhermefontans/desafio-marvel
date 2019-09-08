@@ -2,6 +2,7 @@
 
 namespace App\Entity\Builder;
 
+use App\Entity\EntityInterface;
 use App\Entity\Thumbnail;
 
 /**
@@ -37,7 +38,7 @@ class ThumbnailBuilder implements BuilderInterface
         ]
     ];
 
-    public function build(array $data)
+    public function build(array $data): EntityInterface
     {
         if (is_null($data['thumbnail']) || preg_match("/image_not_available/", $data['thumbnail']['path'])){
             return null;

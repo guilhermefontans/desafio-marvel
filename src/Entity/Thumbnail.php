@@ -4,9 +4,9 @@ namespace App\Entity;
 
 /**
  * Class Thumbnail
- * @package App\Entity\Builder
+ * @package App\Entity
  */
-class Thumbnail
+class Thumbnail implements EntityInterface
 {
     public $path;
 

@@ -6,23 +6,23 @@ namespace App\Entity;
  * Class Comic
  * @package App\Entity
  */
-class Comic
+class Comic implements EntityInterface
 {
-    public $id;
+    private $id;
 
-    public $title;
+    private $title;
 
-    public $issueNumber;
+    private $issueNumber;
 
-    public $variantDescription;
+    private $variantDescription;
 
-    public $description;
+    private $description;
 
-    public $thumbnail;
+    private $thumbnail;
 
-    public $resourceURI;
+    private $resourceURI;
 
-    public $pageCount;
+    private $pageCount;
 
     /**
      * Comic constructor.
@@ -45,5 +45,69 @@ class Comic
         $this->thumbnail          = $thumbnail;
         $this->resourceURI        = $resourceURI;
         $this->pageCount          = $pageCount;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTitle()
+    {
+        return $this->title;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIssueNumber()
+    {
+        return $this->issueNumber;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getVariantDescription()
+    {
+        return $this->variantDescription;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @return null
+     */
+    public function getThumbnail()
+    {
+        return $this->thumbnail;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getResourceURI()
+    {
+        return $this->resourceURI;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPageCount()
+    {
+        return $this->pageCount;
     }
 }

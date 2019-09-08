@@ -3,6 +3,7 @@
 namespace App\Entity\Builder;
 
 use App\Entity\Character;
+use App\Entity\EntityInterface;
 
 /**
  * Class CharacterBuilder
@@ -11,7 +12,7 @@ use App\Entity\Character;
 class CharacterBuilder implements BuilderInterface
 {
 
-    public function build(array $data)
+    public function build(array $data): EntityInterface
     {
         $thumbnailBuilder = new ThumbnailBuilder();
         $thumbnail        = $thumbnailBuilder->build($data);

@@ -71,26 +71,26 @@ class CharacterController extends AbstractController
         $character  = $builder->build($characterData['data']['results'][0]);
 
         $comics = [];
-        if ($character->comics["available"] > 0) {
+        if ($character->getComics()["available"] > 0) {
             $comics = $this->getComicsFromCharacter($character);
         }
 
         $stories = [];
-        if ($character->stories["available"] > 0) {
+        if ($character->getStories()["available"] > 0) {
             $stories = $this->getStoriesFromCharacter($character);
         }
 
         return $this->render('frontend/character.html.twig',[
             "character" => $character,
             "stories"   => $stories,
-            "comics"    => $comics
+            "comics"    => $comics,
         ]);
     }
 
     private function getComicsFromCharacter(Character $character)
     {
         $comics   = [];
-        $response = $this->comicsService->findByResourceURI($character->comics["collectionURI"]);
+        $response = $this->comicsService->findByResourceURI($character->getComics()["collectionURI"]);
         $builder  = new ComicBuilder();
 
         if ($response->getStatusCode() == 200) {
@@ -106,7 +106,7 @@ class CharacterController extends AbstractController
     private function getStoriesFromCharacter(Character $character)
     {
         $stories    = [];
-        $response   = $this->storiesService->findByResourceURI($character->stories["collectionURI"]);
+        $response   = $this->storiesService->findByResourceURI($character->getStories()["collectionURI"]);
         if ($response->getStatusCode() == 200) {
             $storiesData    = json_decode($response->getContent(), 1);
             $builder        = new StorieBuilder();

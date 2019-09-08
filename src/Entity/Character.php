@@ -6,23 +6,21 @@ namespace App\Entity;
  * Class Character
  * @package App\Entity
  */
-class Character
+class Character implements EntityInterface
 {
-    public $id;
+    private $id;
 
-    public $name;
+    private $name;
 
-    public $description;
+    private $description;
 
-    public $modified;
+    private $thumbnail;
 
-    public $thumbnail;
+    private $resourceURI;
 
-    public $resourceURI;
+    private $comics;
 
-    public $comics;
-
-    public $stories;
+    private $stories;
 
     /**
      * Character constructor.
@@ -43,5 +41,61 @@ class Character
         $this->thumbnail    = $thumbnail;
         $this->comics       = $comics;
         $this->stories      = $stories;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @return null
+     */
+    public function getThumbnail()
+    {
+        return $this->thumbnail;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getResourceURI()
+    {
+        return $this->resourceURI;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getComics()
+    {
+        return $this->comics;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getStories()
+    {
+        return $this->stories;
     }
 }
