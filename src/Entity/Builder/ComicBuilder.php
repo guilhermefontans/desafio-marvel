@@ -13,31 +13,20 @@ use App\Entity\Comic;
 
 class ComicBuilder implements BuilderInterface
 {
-    private $data;
-
-    /**
-     * ComicBuilder constructor.
-     * @param $data
-     */
-    public function __construct($data)
+    public function build(array $data)
     {
-        $this->data = $data;
-    }
-
-    public function build()
-    {
-        $thumbnailBuilder = new ThumbnailBuilder($this->data);
-        $thumbnail = $thumbnailBuilder->build();
+        $thumbnailBuilder = new ThumbnailBuilder();
+        $thumbnail = $thumbnailBuilder->build($data);
 
         return new Comic(
-            $this->data["id"],
-            $this->data["title"],
-            $this->data["issueNumber"],
-            $this->data["variantDescription"],
-            $this->data["description"],
+            $data["id"],
+            $data["title"],
+            $data["issueNumber"],
+            $data["variantDescription"],
+            $data["description"],
             $thumbnail,
-            $this->data["resourceURI"],
-            $this->data["pageCount"]
+            $data["resourceURI"],
+            $data["pageCount"]
         );
     }
 }

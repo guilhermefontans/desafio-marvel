@@ -19,4 +19,17 @@ class CharactersService extends AbstractService
     {
         parent::__construct($logger);
     }
+
+    public function findByNameStartWith($startOfTheName)
+    {
+        $this->formatUrlFull(
+            null,
+            [
+                "nameStartsWith" => $startOfTheName,
+                "limit"          => 1
+            ]
+        );
+        $this->logger->info("Fazendo request para: [$this->urlFull]", [get_called_class()]);
+        return $this->httpclient->request("GET", $this->urlFull);
+    }
 }

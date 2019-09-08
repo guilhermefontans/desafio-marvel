@@ -10,26 +10,15 @@ use App\Entity\Storie;
  */
 class StorieBuilder implements BuilderInterface
 {
-    private $data;
-
-    /**
-     * StorieBuilder constructor.
-     * @param $data
-     */
-    public function __construct($data)
+    public function build(array $data)
     {
-        $this->data = $data;
-    }
-
-    public function build()
-    {
-        $thumbnailBuilder = new ThumbnailBuilder($this->data);
-        $thumbnail = $thumbnailBuilder->build();
+        $thumbnailBuilder = new ThumbnailBuilder();
+        $thumbnail = $thumbnailBuilder->build($data);
 
         return new Storie(
-            $this->data["id"],
-            $this->data["title"],
-            $this->data["resourceURI"],
+            $data["id"],
+            $data["title"],
+            $data["resourceURI"],
             $thumbnail
         );
     }

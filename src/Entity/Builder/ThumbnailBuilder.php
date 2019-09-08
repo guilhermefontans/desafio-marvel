@@ -37,25 +37,16 @@ class ThumbnailBuilder implements BuilderInterface
         ]
     ];
 
-    private $data;
-    /**
-     * CharacterBuilder constructor.
-     */
-    public function __construct(array $data)
+    public function build(array $data)
     {
-        $this->data = $data;
-    }
-
-    public function build()
-    {
-        if (is_null($this->data['thumbnail']) || preg_match("/image_not_available/", $this->data['thumbnail']['path'])){
+        if (is_null($data['thumbnail']) || preg_match("/image_not_available/", $data['thumbnail']['path'])){
             return null;
         }
 
         return new Thumbnail(
-            $this->data["thumbnail"]["path"],
+            $data["thumbnail"]["path"],
             self::IMAGE_VARIANS["STANDARD"]["STANDARD_FANTASTIC"],
-            $this->data["thumbnail"]["extension"]
+            $data["thumbnail"]["extension"]
         );
     }
 }

@@ -9,8 +9,8 @@ namespace App\Entity\Builder;
 interface BuilderInterface
 {
     /**
-     * Create a new object
+     * @param array $data
      * @return mixed
      */
-    public function build();
+    public function build(array $data);
 }

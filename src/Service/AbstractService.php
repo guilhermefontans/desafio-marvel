@@ -48,7 +48,7 @@ class AbstractService
         $this->timestamp    = $now->getTimestamp();
     }
 
-    private function formatUrlFull($id = null, $filters = null, $resource = null)
+    protected function formatUrlFull($id = null, $filters = null, $resource = null)
     {
         $this->urlFull = $resource;
         if (is_null($resource)) {
