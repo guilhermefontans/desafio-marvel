@@ -22,6 +22,8 @@ class Character
 
     public $comics;
 
+    public $stories;
+
     /**
      * Character constructor.
      * @param $id
@@ -30,8 +32,9 @@ class Character
      * @param $resourceURI
      * @param null $thumbnail
      * @param $comics
+     * @param $stories
      */
-    public function __construct($id, $name, $description, $resourceURI, $thumbnail = null, $comics)
+    public function __construct($id, $name, $description, $resourceURI, $thumbnail = null, $comics, $stories)
     {
         $this->id           = $id;
         $this->name         = $name;
@@ -39,5 +42,6 @@ class Character
         $this->resourceURI  = $resourceURI;
         $this->thumbnail    = $thumbnail;
         $this->comics       = $comics;
+        $this->stories      = $stories;
     }
 }

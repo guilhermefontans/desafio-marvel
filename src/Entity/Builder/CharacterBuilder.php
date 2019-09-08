@@ -31,13 +31,21 @@ class CharacterBuilder implements BuilderInterface
             $comics["collectionURI"] = $this->data["comics"]["collectionURI"];
         }
 
+        $stories = [];
+        $stories["available"] = $this->data["stories"]["available"];
+
+        if ($stories["available"] > 0) {
+            $stories["collectionURI"] = $this->data["stories"]["collectionURI"];
+        }
+
         return new Character(
             $this->data["id"],
             $this->data["name"],
             $this->data["description"],
             $this->data["resourceURI"],
             $thumbnail,
-            $comics
+            $comics,
+            $stories
         );
     }
 }

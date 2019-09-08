@@ -4,9 +4,11 @@ namespace App\Controller;
 
 use App\Entity\Builder\CharacterBuilder;
 use App\Entity\Builder\ComicBuilder;
+use App\Entity\Builder\StorieBuilder;
 use App\Entity\Character;
 use App\Service\CharactersService;
 use App\Service\ComicsService;
+use App\Service\StoriesService;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -32,15 +34,29 @@ class FrontendController extends AbstractController
      */
     private $comicsService;
 
+    /**
+     * @var StoriesService
+     */
+    private $storiesService;
+
+    /**
+     * FrontendController constructor.
+     * @param LoggerInterface $logger
+     * @param CharactersService $characterService
+     * @param ComicsService $comicsService
+     * @param StoriesService $storiesService
+     */
     public function __construct(
         LoggerInterface $logger,
         CharactersService $characterService,
-        ComicsService $comicsService
+        ComicsService $comicsService,
+        StoriesService $storiesService
     )
     {
         $this->logger           = $logger;
         $this->characterService = $characterService;
-        $this->comicsService = $comicsService;
+        $this->comicsService    = $comicsService;
+        $this->storiesService   = $storiesService;
     }
 
     /**
@@ -78,11 +94,16 @@ class FrontendController extends AbstractController
 
 
         if ($character->comics["available"] > 0) {
-            //$comics = $this->getComicsFromCharacter($character, ComicsService::class);
+            //$comics = $this->getComicsFromCharacter($character);
         }
 
+        if ($character->stories["available"] > 0) {
+            $stories = $this->getStoriesFromCharacter($character);
+        }
+
+        //print_r($stories);
         return $this->render('frontend/character.html.twig',[
-            "character" => $character
+            "character" => $character, "stories" => $stories
         ]);
     }
 
@@ -101,6 +122,20 @@ class FrontendController extends AbstractController
         return $comics;
     }
 
+    private function getStoriesFromCharacter(Character $character)
+    {
+        $stories = [];
+        $response = $this->storiesService->findByResourceURI($character->stories["collectionURI"]);
+        if ($response->getStatusCode() == 200) {
+            $storiesData = json_decode($response->getContent(), 1);
+            foreach ($storiesData["data"]["results"] as $item) {
+                $builder = new StorieBuilder($item);
+                $storie = $builder->build();
+                $stories[] = $storie;
+            }
+        }
+        return $stories;
+    }
 
     public function getCharacter()
     {

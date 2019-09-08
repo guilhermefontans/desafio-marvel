@@ -48,7 +48,7 @@ class ThumbnailBuilder implements BuilderInterface
 
     public function build()
     {
-        if (preg_match("/image_not_available/", $this->data['thumbnail']['path'])){
+        if (is_null($this->data['thumbnail']) || preg_match("/image_not_available/", $this->data['thumbnail']['path'])){
             return null;
         }
 
