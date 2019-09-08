@@ -1,20 +1,30 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="container">
-        <div class="row">
+            <h5 class="text-center py-2">Below are my 3 selected heroes, by clicking on more details link you can get more information about each one of them.</h5>
             {% for character in characters %}
-                <div class="col-md-4">
-                    <a href="/character/{{ character.id }}">
+            <div class="row">
+                <div class="col-md-8 offset-2"  >
+                    <div class="card flex-md-row mb-4 box-shadow h-md-250" style="box-shadow:  2px 5px 7px 3px darkgray;">
+                        <div class="card-body d-flex flex-column align-items-start">
+                            <h3 class="mb-0">
+                                <a class="text-success" href="/character/{{ character.id }}">{{ character.name }}</a>
+                            </h3>
+
+                            {% if  character.description %}
+                            <p class="card-text mb-auto">{{ character.description }}</p>
+                            {% else %}
+                            <p class="card-text mb-auto">Description not found</p>
+                            {% endif %}
+                            <a href="/character/{{ character.id }}">More details</a>
+                        </div>
                         {% if  character.thumbnail %}
-                            <img src={{ character.thumbnail.fullpath }} class="img-thumbnail">
+                            <img class="card-img-right flex-auto d-none d-md-block rounded" src={{ character.thumbnail.fullpath }} alt="Card image cap">
                         {% else %}
-                    <img src="images/image-not-available.jpg" class="img-thumbnail">
+                            <img class="card-img-right flex-auto d-none d-md-block" src="/images/image-not-available.jpg" alt="Card image cap">
                         {% endif %}
-                    <h3 class="title">{{ character.name }}</h3>
-                    </a>
+                    </div>
                 </div>
+            </div>
             {% endfor %}
-        </div>
-    </div>
 {% endblock %}

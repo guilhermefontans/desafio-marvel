@@ -2,3 +2,6 @@ img.img-thumbnail {
     width: 80%;
     height: 80%;
 }
+body {
+    background-color: lightgray;
+}

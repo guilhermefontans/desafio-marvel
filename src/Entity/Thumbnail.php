@@ -8,13 +8,13 @@ namespace App\Entity;
  */
 class Thumbnail implements EntityInterface
 {
-    public $path;
+    private $path;
 
-    public $imageSize;
+    private $imageSize;
 
-    public $extension;
+    private $extension;
 
-    public $fullPath;
+    private $fullPath = null;
 
     /**
      * Thumbnail constructor.
@@ -22,7 +22,7 @@ class Thumbnail implements EntityInterface
      * @param $imageSize
      * @param $extension
      */
-    public function __construct($path, $imageSize, $extension)
+    public function __construct($path = null, $imageSize = null , $extension = null)
     {
         $this->path      = $path;
         $this->imageSize = $imageSize;
@@ -36,5 +36,29 @@ class Thumbnail implements EntityInterface
     public function getFullPath(): string
     {
         return $this->fullPath;
+    }
+
+    /**
+     * @return null
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+
+    /**
+     * @return null
+     */
+    public function getImageSize()
+    {
+        return $this->imageSize;
+    }
+
+    /**
+     * @return null
+     */
+    public function getExtension()
+    {
+        return $this->extension;
     }
 }

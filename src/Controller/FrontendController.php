@@ -42,6 +42,7 @@ class FrontendController extends AbstractController
     {
         $this->logger->info("Iniciando homepage");
         $this->logger->info("Buscando herois favoritos");
+        //$characteres = null ; //$this->getMyFavoriteHeroes();
         $characteres = $this->getMyFavoriteHeroes();
         $this->logger->info("Busca por herois favoritos encerrada");
 

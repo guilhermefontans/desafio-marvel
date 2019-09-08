@@ -40,14 +40,17 @@ class ThumbnailBuilder implements BuilderInterface
 
     public function build(array $data): EntityInterface
     {
+        $path           = null;
+        $extension      = null;
+        $hasThumbnail   = true;
         if (is_null($data['thumbnail']) || preg_match("/image_not_available/", $data['thumbnail']['path'])){
-            return null;
+            $hasThumbnail = false;
         }
 
         return new Thumbnail(
-            $data["thumbnail"]["path"],
-            self::IMAGE_VARIANS["STANDARD"]["STANDARD_FANTASTIC"],
-            $data["thumbnail"]["extension"]
+            $hasThumbnail ? $data["thumbnail"]["path"] : $path,
+            $hasThumbnail ? self::IMAGE_VARIANS["STANDARD"]["STANDARD_FANTASTIC"] : null,
+            $hasThumbnail ? $data["thumbnail"]["extension"] : $extension
         );
     }
 }
