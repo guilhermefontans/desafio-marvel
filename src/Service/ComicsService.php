@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -13,10 +14,11 @@ class ComicsService extends AbstractService
     /**
      * ComicsService constructor.
      * @param LoggerInterface $logger
+     * @param CacheItemPoolInterface $cache
      * @throws \Exception
      */
-    public function __construct(LoggerInterface $logger)
+    public function __construct(LoggerInterface $logger, CacheItemPoolInterface $cache)
     {
-        parent::__construct($logger);
+        parent::__construct($logger, $cache);
     }
 }

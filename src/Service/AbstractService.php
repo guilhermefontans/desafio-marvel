@@ -2,6 +2,7 @@
 
 namespace App\Service;
 
+use Psr\Cache\CacheItemPoolInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpClient\HttpClient;
 
@@ -33,12 +34,15 @@ class AbstractService
 
     protected $filters;
 
+    protected $cache;
+
     /**
      * AbstractService constructor.
      * @param LoggerInterface $logger
+     * @param CacheItemPoolInterface $cache
      * @throws \Exception
      */
-    public function __construct(LoggerInterface $logger)
+    public function __construct(LoggerInterface $logger, CacheItemPoolInterface $cache)
     {
         $this->logger       = $logger;
         $this->httpclient   = HttpClient::create();
@@ -46,6 +50,7 @@ class AbstractService
         $this->publicKey    = $_ENV["API_PUBLIC_KEY"];
         $now                = new \DateTimeImmutable();
         $this->timestamp    = $now->getTimestamp();
+        $this->cache        = $cache;
 
         if ($this->privateKey == "xxxxxxxx") {
             throw new \Exception("Did you edit .env file?");
@@ -83,20 +88,52 @@ class AbstractService
     {
         $this->formatUrlFull();
         $this->logger->info("Fazendo request para: [$this->urlFull]", [get_called_class()]);
-        return $this->httpclient->request("GET", $this->urlFull);
+
+        $response = $this->cache->getItem($this->urlFull);
+        if (! $response->isHit()) {
+            $this->logger->info("Salvando retorno do request em cache [$this->urlFull]", [get_called_class()]);
+            $response->set($this->httpclient->request("GET", $this->urlFull));
+            $this->cache->save($response);
+        } else {
+            $this->logger->info("Buscando retorno do request em cache [$this->urlFull]", [get_called_class()]);
+        }
+        return $this->cache->getItem($this->urlFull);
     }
 
     public function findByResourceURI($resourceUri)
     {
         $this->formatUrlFull(null, ["limit" => 5], $resourceUri);
         $this->logger->info("Fazendo request para: [$this->urlFull]", [get_called_class()]);
-        return $this->httpclient->request("GET", $this->urlFull);
+
+        $response = $this->cache->getItem(urlencode($resourceUri));
+
+        if (! $response->isHit()) {
+            $this->logger->info("Salvando retorno do request em cache [$this->urlFull]", [get_called_class()]);
+            $response->set($this->httpclient->request("GET", $this->urlFull)->getContent());
+            $this->cache->save($response);
+        } else {
+            $this->logger->info("Buscando retorno do request em cache [$this->urlFull]", [get_called_class()]);
+        }
+
+        $response = $this->cache->getItem(urlencode($resourceUri));
+        return $response->get();
     }
 
     public function findById($id)
     {
         $this->formatUrlFull($id);
         $this->logger->info("Fazendo request para: [$this->urlFull]", [get_called_class()]);
-        return $this->httpclient->request("GET", $this->urlFull);
+
+        $response = $this->cache->getItem($this->resource . $id);
+
+        if (! $response->isHit()) {
+            $this->logger->info("Salvando retorno do request em cache [$this->urlFull]", [get_called_class()]);
+            $response->set($this->httpclient->request("GET", $this->urlFull)->getContent());
+            $this->cache->save($response);
+        } else {
+            $this->logger->info("Buscando retorno do request em cache [$this->urlFull]", [get_called_class()]);
+        }
+        $response = $this->cache->getItem($this->resource . $id);
+        return $response->get();
     }
 }

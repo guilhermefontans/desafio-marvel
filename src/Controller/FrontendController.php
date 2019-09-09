@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Builder\CharacterBuilder;
 use App\Service\CharactersService;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -52,7 +51,6 @@ class FrontendController extends AbstractController
         $characteres = [];
 
         try {
-
             $this->logger->info("Iniciando homepage");
             $this->logger->info("Buscando herois favoritos");
 
@@ -74,11 +72,8 @@ class FrontendController extends AbstractController
         foreach (self::MY_FAVORITE_HEROES as $heroToSearch) {
             $response = $this->characterService->findByNameStartWith($heroToSearch);
             $this->logger->info("Buscando [$heroToSearch]");
-            if ($response->getStatusCode() != 200) {
-                $this->logger->error("Erro ao buscar heroi [$heroToSearch]");
-                throw new HttpException("Erro ao buscar [$heroToSearch]");
-            }
-            $data = json_decode($response->getContent(), 1);
+
+            $data = json_decode($response, 1);
 
             if ($data["data"]['count'] == 0) {
                 $this->logger->error("[$heroToSearch] não foi encontrado");

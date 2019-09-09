@@ -11,7 +11,6 @@ use App\Service\ComicsService;
 use App\Service\StoriesService;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -70,10 +69,10 @@ class CharacterController extends AbstractController
         $character   = null;
         $comics      = [];
         $stories     = [];
-        try {
 
+        try {
             $response       = $this->characterService->findById($id);
-            $characterData  = json_decode($response->getContent(), 1);
+            $characterData  = json_decode($response, 1);
 
             $builder    = new CharacterBuilder();
             $character  = $builder->build($characterData['data']['results'][0]);
@@ -88,7 +87,7 @@ class CharacterController extends AbstractController
                 $stories = $this->getStoriesFromCharacter($character);
             }
         } catch (\Exception $ex) {
-
+            $error = $ex->getMessage();
         } finally {
             return $this->render('frontend/character.html.twig',[
                 "character" => $character,
@@ -105,13 +104,7 @@ class CharacterController extends AbstractController
         $response = $this->comicsService->findByResourceURI($character->getComics()["collectionURI"]);
         $builder  = new ComicBuilder();
 
-        if ($response->getStatusCode() != 200) {
-            $this->logger->error(
-                "Erro ao buscar quadrinhos do heroi {$character->getName()} [$character->getComics()[\"collectionURI\"]]"
-            );
-            throw new HttpException("error on search for comics in [$character->getComics()[\"collectionURI\"]]");
-        }
-        $comicsData = json_decode($response->getContent(), 1);
+        $comicsData = json_decode($response, 1);
         if ($comicsData["data"]["count"] == 0) {
             $this->logger->error("[$character->getComics()[\"collectionURI\"]] não foi encontrado");
             throw new NotFoundHttpException("[$character->getComics()[\"collectionURI\"]] not found");
@@ -128,14 +121,8 @@ class CharacterController extends AbstractController
     {
         $stories    = [];
         $response   = $this->storiesService->findByResourceURI($character->getStories()["collectionURI"]);
-        if ($response->getStatusCode() != 200) {
-            $this->logger->error(
-                "Erro ao buscar historias do heroi {$character->getName()} [$character->getComics()[\"collectionURI\"]]"
-            );
-            throw new HttpException("error on search for stories in [$character->getComics()[\"collectionURI\"]]");
-        }
 
-        $storiesData    = json_decode($response->getContent(), 1);
+        $storiesData    = json_decode($response, 1);
         if ($storiesData["data"]["count"] == 0) {
             $this->logger->error("[$character->getComics()[\"collectionURI\"]] não foi encontrado");
             throw new NotFoundHttpException("[$character->getComics()[\"collectionURI\"]] not found");
