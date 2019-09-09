@@ -9,17 +9,16 @@
             <link rel="stylesheet" href="/css/app.css"/>
         {% endblock %}
     </head>
-    <body>
-    <div class="container-fluid">
+    <body >
+    <div class="container-fluid ">
         <div class="wrapper">
             <div style="position:relative;">
                 <div class="row no-gutters" style="box-shadow: 0px 5px 7px 2px darkgray;">
                     <div class="col py-5">
                         <h1 class="text-center">Marvel's Heros</h1>
-
                     </div>
                 </div>
-                <div class="row no-gutters">
+                <div class="row no-gutters" >
                     <div class="col-xs-2 col-md-2 h-auto" style="box-shadow: 5px 5px 8px 2px darkgray;">
                         <img src="/images/marvel-left.jpg" class="img-fluid h-100 rounded">
                     </div>
@@ -39,8 +38,10 @@
             </div>
         </div>
     </div>
-
         {% block javascripts %}
+            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
         {% endblock %}
     </body>
 </html>

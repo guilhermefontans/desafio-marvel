@@ -20,7 +20,8 @@ class StorieBuilder implements BuilderInterface
             $data["id"],
             $data["title"],
             $data["resourceURI"],
-            $thumbnail
+            $thumbnail,
+            $data["description"]
         );
     }
 }

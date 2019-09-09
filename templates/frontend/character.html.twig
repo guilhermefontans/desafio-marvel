@@ -1,20 +1,106 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-        <div class="row">
-            <div class="col-md-4">
+    <h5 class="text-center py-3">Here there more detail about {{ character.name }}, click over list of the comics and stories to more information about them</h5>
+    <div class="row">
+        <div class="col-md-10 offset-1"  >
+            <div class="card flex-md-row mb-4 box-shadow h-md-200" style="box-shadow:  2px 5px 7px 3px darkgray;">
+                <div class="card-body d-flex flex-column align-items-start">
+                    <h3 class="mb-0 text-success">
+                        {{ character.name }}
+                    </h3>
+                    {% if  character.description %}
+                        <p class="card-text mb-auto">{{ character.description }}</p>
+                    {% else %}
+                        <p class="card-text mb-auto">Description not found</p>
+                    {% endif %}
+
+                    <div class="py-2">
+                        <h5 class="mb-0 text-success"> Comics list </h5>
+                        <div class="card-text">
+                        {% for comic in comics %}
+                            <!-- Botão para acionar modal -->
+                            <li><a style="cursor: pointer" data-toggle="modal" data-target="#comic-{{ comic.id }}" >{{ comic.title }}</a></li>
+                        {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="py-2">
+                        <h5 class="mb-0 text-success"> Stories list </h5>
+                        <div class="card-text">
+                            {% for storie in stories %}
+                                <!-- Botão para acionar modal -->
+                                <li><a style="cursor: pointer" data-toggle="modal" data-target="#storie-{{ storie.id }}" >{{ storie.title }}</a></li>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
                 {% if  character.thumbnail %}
-                    <img src={{ character.thumbnail.fullpath }} class="img-thumbnail">
+                    <img class="card-img-right flex-auto d-none d-md-block rounded" src={{ character.thumbnail.fullpath }}>
                 {% else %}
-                    <img src="images/image-not-available.jpg" class="img-thumbnail">
-                {% endif %}
-                <h3 class="title">{{ character.name }}</h3>
-                {% if  character.description %}
-                <h5 class="title">{{ character.description }}</h5>
-                {% else %}
-                <h5 class="title">No description found</h5>
+                    <img class="card-img-right flex-auto d-none d-md-block" src="/images/image-not-available.jpg">
                 {% endif %}
             </div>
         </div>
     </div>
+
+    <!-- Modal -->
+    {% for comic in comics %}
+    <div class="modal fade" id="comic-{{ comic.id}}" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="col-md-12">
+                        <div class="card flex-md-row mb-4 box-shadow h-md-250">
+                            <div class="card-body d-flex flex-column align-items-start">
+                                <strong class="d-inline-block mb-2 text-success">{{ comic.variantDescription }}</strong>
+                                <h3 class="mb-0 text-success">
+                                    {{ comic.title }}
+                                </h3>
+                                <div class="mb-1 text-muted">Issue Number #{{ comic.issueNumber }}</div>
+                                <p class="card-text mb-auto">{{ comic.description }}</p>
+                            </div>
+                            {% if  character.thumbnail %}
+                                <img class="card-img-right flex-auto d-none d-md-block rounded" src={{ comic.thumbnail.fullpath }}>
+                            {% else %}
+                                <img class="card-img-right flex-auto d-none d-md-block" src="/images/image-not-available.jpg">
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    {% for storie in stories %}
+        <div class="modal fade" id="storie-{{ storie.id}}" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="col-md-12">
+                            <div class="card flex-md-row mb-4 box-shadow h-md-250">
+                                <div class="card-body d-flex flex-column align-items-start">
+                                    <h3 class="mb-0 text-success">
+                                        {{ storie.title }}
+                                    </h3>
+                                    {% if  storie.description %}
+                                        <p class="card-text mb-auto">{{ storie.description }}</p>
+                                    {% else %}
+                                        <p class="card-text mb-auto">Description not found</p>
+                                    {% endif %}
+                                </div>
+                                {% if  character.thumbnail %}
+                                    <img class="card-img-right flex-auto d-none d-md-block rounded" src={{ storie.thumbnail.fullpath }}>
+                                {% else %}
+                                    <img class="card-img-right flex-auto d-none d-md-block" src="/images/image-not-available.jpg">
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
 {% endblock %}
+

@@ -16,19 +16,23 @@ class Storie implements EntityInterface
 
     private $thumbnail;
 
+    private $description;
+
     /**
      * Storie constructor.
      * @param $id
      * @param $title
      * @param $resourceURI
      * @param $thumbnail
+     * @param $description
      */
-    public function __construct($id, $title, $resourceURI, $thumbnail)
+    public function __construct($id, $title, $resourceURI, $thumbnail, $description)
     {
         $this->id          = $id;
         $this->title       = $title;
         $this->resourceURI = $resourceURI;
         $this->thumbnail   = $thumbnail;
+        $this->description = $description;
     }
 
     /**
@@ -61,5 +65,13 @@ class Storie implements EntityInterface
     public function getThumbnail()
     {
         return $this->thumbnail;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }

@@ -27,13 +27,13 @@ class Thumbnail implements EntityInterface
         $this->path      = $path;
         $this->imageSize = $imageSize;
         $this->extension = $extension;
-        $this->fullPath  = $this->path ."/". $this->imageSize .".".$this->extension;
+        $this->fullPath  = is_null($this->path) ? null : $this->path ."/". $this->imageSize .".".$this->extension;
     }
 
     /**
      * @return string
      */
-    public function getFullPath(): string
+    public function getFullPath(): ?string
     {
         return $this->fullPath;
     }

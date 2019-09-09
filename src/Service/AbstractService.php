@@ -88,7 +88,7 @@ class AbstractService
 
     public function findByResourceURI($resourceUri)
     {
-        $this->formatUrlFull(null, null, $resourceUri);
+        $this->formatUrlFull(null, ["limit" => 5], $resourceUri);
         $this->logger->info("Fazendo request para: [$this->urlFull]", [get_called_class()]);
         return $this->httpclient->request("GET", $this->urlFull);
     }
