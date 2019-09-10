@@ -27,8 +27,7 @@ class CharactersService extends AbstractService
         $this->formatUrlFull(
             null,
             [
-                "nameStartsWith" => $startOfTheName,
-                "limit"          => 1
+                "nameStartsWith" => $startOfTheName
             ]
         );
         $this->logger->info("Fazendo request para: [$this->urlFull]", [get_called_class()]);

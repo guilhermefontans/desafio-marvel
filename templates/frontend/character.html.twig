@@ -49,6 +49,15 @@
         </div>
     </div>
 
+    <div class="row col-md-10 offset-2">
+        <div class="col">
+            <input type="text" name="txtHero" class="form-control typeahead" id="txtHero" placeholder="Find other Hero">
+        </div>
+        <div class="col">
+            <button id="goToHero" class="btn btn-large btn-info">Browse</button>
+        </div>
+    </div>
+
     <!-- Modal -->
     {% for comic in comics %}
     <div class="modal fade" id="comic-{{ comic.id}}" tabindex="-1" role="dialog" aria-labelledby="TituloModalCentralizado" aria-hidden="true">

@@ -11,6 +11,8 @@ use App\Service\ComicsService;
 use App\Service\StoriesService;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -39,6 +41,7 @@ class CharacterController extends AbstractController
      * @var StoriesService
      */
     private $storiesService;
+
 
     /**
      * CharacterController constructor.
@@ -94,6 +97,37 @@ class CharacterController extends AbstractController
                 "stories"   => $stories,
                 "comics"    => $comics,
                 "error"     => $error
+            ]);
+        }
+    }
+
+    /**
+     * @Route("/api/character/startname/", name="find_hero")
+     */
+    public function findByName(Request $request)
+    {
+        $justNames = [];
+        $error     = null;
+
+        try {
+            $heroToSearch = $request->get("name");
+            $response = $this->characterService->findByNameStartWith($heroToSearch);
+
+            $heroes = json_decode($response,true);
+
+            if ($heroes["data"]["total"] > 0) {
+                $justNames = array_map(function($hero) {
+                    $heroMapped["name"] = $hero["name"];
+                    $heroMapped["id"]   = $hero["id"];
+                    return $heroMapped;
+                },$heroes["data"]["results"]);
+            }
+        } catch (\Exception $ex) {
+            $error = $ex->getMessage();
+        } finally {
+            return new JsonResponse([
+                "heroes" => $justNames,
+                "error"  =>$error
             ]);
         }
     }
