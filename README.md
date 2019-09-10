@@ -1,7 +1,7 @@
 ### Desafio Marvel
 #### Descrição
 Este projeto é a resolução de um desafio técnico para um processo seletivo, no qual o desafio era buscar por três herois favoritos e listar cinco histórias na quais cada um deles está incluso.
-Para buscar os dados dos personagens foi utilizada a API da Marvel, para poder consultar a api é necessário [gerar o par de chaves publica e privada](https://developer.marvel.com/account), para ese procedimento é necessário ter uma conta na Marvel
+Para buscar os dados dos personagens foi utilizada a API da Marvel, para poder consultar a api é necessário [gerar o par de chaves publica e privada](https://developer.marvel.com/account), para esse procedimento é necessário ter uma conta na Marvel
 
 #### Pré requisitos
 Os itens abaixo serão necessários para poder instalar o projeto
