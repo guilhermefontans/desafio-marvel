@@ -41,7 +41,10 @@ O projeto foi dividido em quatro camadas:
  
 A arquitetura do projeto ficou como apresentado na imagem abaixo:
 
-![GitHub Logo](public/images/fluxo.jpg)
+<p align="center">
+  <img width="550" height="400" src="https://raw.githubusercontent.com/guilhermefontans/desafio-marvel/master/public/images/fluxo.jpg">
+</p>
+
 
 ##### Descrição dos passos
 1. O usuário requer uma página para a aplicação, essa requisição é enviada para o controller.
