@@ -10,10 +10,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Class FrontendController
+ * Class HomeController
  * @package App\Controller
  */
-class FrontendController extends AbstractController
+class HomeController extends AbstractController
 {
     private const MY_FAVORITE_HEROES = [
         "Hulk",
@@ -32,7 +32,7 @@ class FrontendController extends AbstractController
     private $characterService;
 
     /**
-     * FrontendController constructor.
+     * HomeController constructor.
      * @param LoggerInterface $logger
      * @param CharactersService $characterService
      */

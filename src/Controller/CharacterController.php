@@ -101,37 +101,6 @@ class CharacterController extends AbstractController
         }
     }
 
-    /**
-     * @Route("/api/character/startname/", name="find_hero")
-     */
-    public function findByName(Request $request)
-    {
-        $justNames = [];
-        $error     = null;
-
-        try {
-            $heroToSearch = $request->get("name");
-            $response = $this->characterService->findByNameStartWith($heroToSearch);
-
-            $heroes = json_decode($response,true);
-
-            if ($heroes["data"]["total"] > 0) {
-                $justNames = array_map(function($hero) {
-                    $heroMapped["name"] = $hero["name"];
-                    $heroMapped["id"]   = $hero["id"];
-                    return $heroMapped;
-                },$heroes["data"]["results"]);
-            }
-        } catch (\Exception $ex) {
-            $error = $ex->getMessage();
-        } finally {
-            return new JsonResponse([
-                "heroes" => $justNames,
-                "error"  =>$error
-            ]);
-        }
-    }
-
     private function getComicsFromCharacter(Character $character)
     {
         $comics   = [];
