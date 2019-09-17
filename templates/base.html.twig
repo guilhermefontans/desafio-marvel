@@ -52,6 +52,8 @@
                             if (query.length < 3) {
                                 return false;
                             }
+                            $("#loading").show()
+                            $("#txtHero").prop("disabled", true);
                             $.ajax({
                                 url: '{{ (path('find_hero'))}}',
                                 data : {
@@ -61,16 +63,27 @@
                                 dataType: "json",
                                 type: "GET",
                                 success: function (data) {
+                                    $("#loading").hide()
                                     result($.map(data.heroes, function (item) {
                                         return item;
                                     }));
+                                    $("#txtHero").prop("disabled", false);
                                 }
                             });
                         }
                     });
                 });
+                $('#txtHero.typeahead').on('change', function (e) {
+                    if(! $("#txtHero").data()) {
+                        $("#goToHero").prop("disabled", true);
+                        return false;
+                    }
+                    var id = $("#txtHero").data().active.id
+                    var abc = id ? true : false;
+                    $("#goToHero").prop("disabled", false)
+                })
               $("#goToHero").click(function(data) {
-                  id = $("#txtHero").data().active.id;
+                  var id = $("#txtHero").data().active.id;
                   if (id) {
                       window.location="/character/" + id
                   }
