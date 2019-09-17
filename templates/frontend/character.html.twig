@@ -2,12 +2,7 @@
 
 {% block body %}
     <h5 class="text-center py-3">Here there more detail about {{ character.name }}, click over list of the comics and stories to more information about them</h5>
-    {% if error %}
-        <div  class="alert alert-danger">
-            {{ error }}
-        </div>
-    {% endif %}
-    <div class="row">
+    <div id="content" class="row" style="display: block">
         <div class="col-md-10 offset-1"  >
             <div class="card flex-md-row mb-4 box-shadow h-md-200" style="box-shadow:  2px 5px 7px 3px darkgray;">
                 <div class="card-body d-flex flex-column align-items-start">

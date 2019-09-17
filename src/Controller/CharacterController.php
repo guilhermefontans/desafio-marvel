@@ -11,8 +11,6 @@ use App\Service\ComicsService;
 use App\Service\StoriesService;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -68,11 +66,6 @@ class CharacterController extends AbstractController
      */
     public function character($id)
     {
-        $error       = null;
-        $character   = null;
-        $comics      = [];
-        $stories     = [];
-
         try {
             $response       = $this->characterService->findById($id);
             $characterData  = json_decode($response, 1);
@@ -89,14 +82,15 @@ class CharacterController extends AbstractController
             if ($character->getStories()["available"] > 0) {
                 $stories = $this->getStoriesFromCharacter($character);
             }
-        } catch (\Exception $ex) {
-            $error = $ex->getMessage();
-        } finally {
+
             return $this->render('frontend/character.html.twig',[
                 "character" => $character,
                 "stories"   => $stories,
-                "comics"    => $comics,
-                "error"     => $error
+                "comics"    => $comics
+            ]);
+        } catch (\Exception $ex) {
+            return $this->render('frontend/error.html.twig',[
+                "error"     => $ex->getMessage()
             ]);
         }
     }

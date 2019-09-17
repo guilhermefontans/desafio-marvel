@@ -2,13 +2,6 @@
 
 {% block body %}
             <h5 class="text-center py-2">Below are my 3 selected heroes, by clicking on more details link you can get more information about each one of them.</h5>
-
-            {% if error %}
-            <div  class="alert alert-danger">
-                {{ error }}
-            </div>
-            {% endif %}
-
             {% for character in characters %}
             <div class="row">
                 <div class="col-md-8 offset-2"  >

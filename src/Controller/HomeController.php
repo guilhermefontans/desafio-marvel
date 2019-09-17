@@ -47,21 +47,18 @@ class HomeController extends AbstractController
      */
     public function homepage()
     {
-        $error       = null;
-        $characteres = [];
-
         try {
             $this->logger->info("Iniciando homepage");
             $this->logger->info("Buscando herois favoritos");
 
             $characteres = $this->getMyFavoriteHeroes();
             $this->logger->info("Busca por herois favoritos encerrada");
-        } catch (\Exception $ex) {
-            $error = $ex->getMessage();
-        } finally {
             return $this->render('frontend/homepage.html.twig', [
-                "error"      => $error,
                 "characters" => $characteres
+            ]);
+        } catch (\Exception $ex) {
+            return $this->render('frontend/homepage.html.twig', [
+                "error" => $ex->getMessage()
             ]);
         }
     }
