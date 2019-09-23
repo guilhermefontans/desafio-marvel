@@ -84,38 +84,28 @@ class AbstractService
         $this->urlFull    .= "?" .http_build_query($filters);
     }
 
-    public function findAll()
-    {
-        $this->formatUrlFull();
-        $this->logger->info("Fazendo request para: [$this->urlFull]", [get_called_class()]);
-
-        $response = $this->cache->getItem($this->urlFull);
-        if (! $response->isHit()) {
-            $this->logger->info("Salvando retorno do request em cache [$this->urlFull]", [get_called_class()]);
-            $response->set($this->httpclient->request("GET", $this->urlFull));
-            $this->cache->save($response);
-        } else {
-            $this->logger->info("Buscando retorno do request em cache [$this->urlFull]", [get_called_class()]);
-        }
-        return $this->cache->getItem($this->urlFull);
-    }
-
     public function findByResourceURI($resourceUri)
     {
         $this->formatUrlFull(null, ["limit" => 5], $resourceUri);
         $this->logger->info("Fazendo request para: [$this->urlFull]", [get_called_class()]);
 
-        $response = $this->cache->getItem(urlencode($resourceUri));
+        return $this->getResponseFromCache($resourceUri);
+    }
+
+    protected function getResponseFromCache($cacheKey)
+    {
+        $response = $this->cache->getItem(urlencode($cacheKey));
+        $this->logger->info("Verificando se a URL [$this->urlFull] existe em cache", [get_called_class()]);
 
         if (! $response->isHit()) {
-            $this->logger->info("Salvando retorno do request em cache [$this->urlFull]", [get_called_class()]);
+            $this->logger->info("Não tinha cache, o sistema irá efetuar a requisição na Marvel", [get_called_class()]);
             $response->set($this->httpclient->request("GET", $this->urlFull)->getContent());
+            $this->logger->info("Salvando resultado da requisição em cache", [get_called_class()]);
             $this->cache->save($response);
-        } else {
-            $this->logger->info("Buscando retorno do request em cache [$this->urlFull]", [get_called_class()]);
         }
 
-        $response = $this->cache->getItem(urlencode($resourceUri));
+        $this->logger->info("Buscando retorno do request em cache [$this->urlFull]", [get_called_class()]);
+        $response = $this->cache->getItem(urlencode($cacheKey));
         return $response->get();
     }
 
@@ -124,16 +114,6 @@ class AbstractService
         $this->formatUrlFull($id);
         $this->logger->info("Fazendo request para: [$this->urlFull]", [get_called_class()]);
 
-        $response = $this->cache->getItem($this->resource . $id);
-
-        if (! $response->isHit()) {
-            $this->logger->info("Salvando retorno do request em cache [$this->urlFull]", [get_called_class()]);
-            $response->set($this->httpclient->request("GET", $this->urlFull)->getContent());
-            $this->cache->save($response);
-        } else {
-            $this->logger->info("Buscando retorno do request em cache [$this->urlFull]", [get_called_class()]);
-        }
-        $response = $this->cache->getItem($this->resource . $id);
-        return $response->get();
+        return $this->getResponseFromCache($this->resource . $id);
     }
 }

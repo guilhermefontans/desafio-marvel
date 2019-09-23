@@ -32,15 +32,6 @@ class CharactersService extends AbstractService
         );
         $this->logger->info("Fazendo request para: [$this->urlFull]", [get_called_class()]);
 
-        $response = $this->cache->getItem($this->resource . $startOfTheName);
-        if (! $response->isHit()) {
-            $this->logger->info("Salvando retorno do request em cache [$this->urlFull]", [get_called_class()]);
-            $response->set($this->httpclient->request("GET", $this->urlFull)->getContent());
-            $this->cache->save($response);
-        } else {
-            $this->logger->info("Buscando retorno do request em cache [$this->urlFull]", [get_called_class()]);
-        }
-        $response = $this->cache->getItem($this->resource . $startOfTheName);
-        return $response->get();
+        return $this->getResponseFromCache($this->resource . $startOfTheName);
     }
 }
