@@ -22,9 +22,12 @@ $ docker-compose up -d
 ```
 3. Rodar o comando abaixo para instalar as dependências do projeto: 
 ```sh
-$ docker run --rm --interactive --tty --volume $PWD:/app composer install --ignore-platform-reqs
+$ docker run  --rm  --volume $PWD:/app --user $(id -u):$(id -g)   composer install --ignore-platform-reqs
 ```
-
+4. Alterar as permissões do diretorio var:
+```sh
+$ docker-compose exec php chmod 777 -R /app/var
+``` 
 Após efetuar esses passos, acessar o seguinte endereço em seu navegador: http://localhost:8000
  
 #### Descrição arquitetural
