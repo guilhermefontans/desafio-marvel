@@ -57,7 +57,7 @@ class HomeController extends AbstractController
                 "characters" => $characteres
             ]);
         } catch (\Exception $ex) {
-            return $this->render('frontend/homepage.html.twig', [
+            return $this->render('frontend/error.html.twig', [
                 "error" => $ex->getMessage()
             ]);
         }
